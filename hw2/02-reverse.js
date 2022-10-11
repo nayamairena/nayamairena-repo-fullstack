@@ -5,6 +5,11 @@
  */
 /** Exercise 02 - Reverse **/
 
+let main = document.querySelector('main');
+let div = document.createElement('div');
+div.id = 'output';
+main.append(div);
+
 //Get html element by ID utilizing the DOM.
 //This html element is the button, so this function is handling on click.
 document.getElementById('reverse').onclick = () => {
