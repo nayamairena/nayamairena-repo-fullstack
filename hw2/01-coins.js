@@ -8,12 +8,12 @@
 //Function that will use a conditional (ternary) operator to check if the change name needs to be plural.
 const plurals = (count, word) => {
   //Check if last letter of the string ends with a "y". This is because "penny" is different than the others.
-  if (word.slice(-1) === "y") {
+  if (word.slice(-1) === 'y') {
     //Slice "penny" to be "penn".
     let newWord = word.slice(0, -1);
     //Return "pennies" if there is more than 1 penny.
-    return count === 1 ? word : newWord + "ies";
-  } else return count === 1 ? word : word + "s";
+    return count === 1 ? word : newWord + 'ies';
+  } else return count === 1 ? word : word + 's';
   //Else, we want to return the word with an "s" at the end for multiples.
 };
 
@@ -21,10 +21,10 @@ const plurals = (count, word) => {
 const calculateChange = (input) => {
   // Add your code here
   //Multiple use cases to check before actual functionality.
-  if (input > 10) return "Error: the number is too large.";
-  else if (input === 0) return "Error: 0 returns no change.";
-  else if (input < 0) return "Error: Negative dollar amount not allowed.";
-  else if (isNaN(input)) return "Error: Input is not a number value.";
+  if (input > 10) return 'Error: the number is too large.';
+  else if (input === 0) return 'Error: 0 returns no change.';
+  else if (input < 0) return 'Error: Negative dollar amount not allowed.';
+  else if (isNaN(input)) return 'Error: Input is not a number value.';
   else {
     //I decided to fix the values to be up to two decimal places.
     //I was getting the wrong change amounts with regular float values.
@@ -42,40 +42,40 @@ const calculateChange = (input) => {
     let pennies = Math.floor(change / 0.01);
 
     //Start the main message we will be returining.
-    let mainMessage = "$" + input.toFixed(2) + " ==> ";
+    let mainMessage = '$' + input.toFixed(2) + ' ==> ';
 
     //Check each change type, if it is greater than 0, we want to add it to our string.
     if (dollars > 0) {
       //Use plurals() to get either "dollar" or "dollars"
-      let sDollars = plurals(dollars, "dollar");
+      let sDollars = plurals(dollars, 'dollar');
       //For formatting purposes, we want to check if all the other change values are zero.
       //If they are 0, we want to only append the dollar string to main message and return it.
       if (quarters === 0 && dimes === 0 && nickels === 0 && pennies === 0)
-        return (mainMessage += dollars + " " + sDollars);
-      else mainMessage += dollars + " " + sDollars + ", ";
+        return (mainMessage += dollars + ' ' + sDollars);
+      else mainMessage += dollars + ' ' + sDollars + ', ';
       //Else, we will append the dollar string to main message and add a ", " at the end.
     }
     //The rest of these conditions essentially do the same thing.
     if (quarters > 0) {
-      let sQuarters = plurals(quarters, "quarter");
+      let sQuarters = plurals(quarters, 'quarter');
       if (dimes === 0 && nickels === 0 && pennies === 0)
-        return (mainMessage += quarters + " " + sQuarters);
-      else mainMessage += quarters + " " + sQuarters + ", ";
+        return (mainMessage += quarters + ' ' + sQuarters);
+      else mainMessage += quarters + ' ' + sQuarters + ', ';
     }
     if (dimes > 0) {
-      let sDimes = plurals(dimes, "dime");
+      let sDimes = plurals(dimes, 'dime');
       if (nickels === 0 && pennies === 0)
-        return (mainMessage += dimes + " " + sDimes);
-      else mainMessage += dimes + " " + sDimes + ", ";
+        return (mainMessage += dimes + ' ' + sDimes);
+      else mainMessage += dimes + ' ' + sDimes + ', ';
     }
     if (nickels > 0) {
-      let sNickels = plurals(nickels, "nickel");
-      if (pennies === 0) return (mainMessage += nickels + " " + sNickels);
-      else mainMessage += nickels + " " + sNickels + ", ";
+      let sNickels = plurals(nickels, 'nickel');
+      if (pennies === 0) return (mainMessage += nickels + ' ' + sNickels);
+      else mainMessage += nickels + ' ' + sNickels + ', ';
     }
     if (pennies > 0) {
-      let sPennies = plurals(pennies, "penny");
-      mainMessage += pennies + " " + sPennies;
+      let sPennies = plurals(pennies, 'penny');
+      mainMessage += pennies + ' ' + sPennies;
       return mainMessage;
     }
   }
@@ -96,7 +96,7 @@ console.log(calculateChange(0));
 // 0 ==> Error: 0 returns no change.
 console.log(calculateChange(-1.11));
 // -1.11 ==> Error: Negative dollar amount not allowed.
-console.log(calculateChange("Hello"));
+console.log(calculateChange('Hello'));
 // "Hello" ==> Error: Input is not a number value.
 
 //These will test the formatting when excluding values with 0.
