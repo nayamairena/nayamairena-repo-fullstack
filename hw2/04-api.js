@@ -3,7 +3,6 @@
  * Fall 2022
  * CS465P Full Stack
  */
-/** Exercise 03 - Form **/
 /** Exercise 04 - API **/
 const url = 'https://restcountries.com/v3.1/all';
 
