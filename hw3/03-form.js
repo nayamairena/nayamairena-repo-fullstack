@@ -6,6 +6,7 @@ const port = process.env.PORT || 5001;
 
 // http://localhost:5001/submit should return all the data the user entered
 
+//html form for webpage.
 const postHTML = `<html><body>
   <form method='post' action='/submit'>
   <label for="Name">Name: </label><br/>
@@ -20,16 +21,21 @@ const postHTML = `<html><body>
   </form></body></html>`;
 
 const server = http.createServer((req, res) => {
+  //form url.
   if (req.url === '/form') {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write(postHTML);
     res.end();
-  } else if (req.url === '/submit') {
+  }
+  //submit url. Redirected here when submit button is pressed.
+  else if (req.url === '/submit') {
     let body = '';
+    //Get data from form.
     req.on('data', (chunk) => {
       body += chunk;
       console.log('on data: ' + body);
     });
+    //Go to submit page and post the data from the form.
     req.on('end', () => {
       console.log('on end: ' + body);
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -40,7 +46,7 @@ const server = http.createServer((req, res) => {
         keyArray.push(key);
         valueArray.push(value);
       });
-
+      //Need to check if checkbox was checked for news letter.
       if (keyArray.length === 4) {
         for (let i = 0; i < 3; i++) {
           res.write(`${keyArray[i]}: ${valueArray[i]} <br>`);
