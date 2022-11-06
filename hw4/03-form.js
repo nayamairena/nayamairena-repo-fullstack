@@ -13,11 +13,15 @@ app.post('/submit', (req, res) => {
   // Add your code here
   res.status(200);
   res.set({ 'Content-Type': 'text/html' });
-  res.write(`Name: ${req.body.Name} <br>`);
-  res.write(`Email: ${req.body.Email} <br>`);
-  res.write(`Comments: ${req.body.Comments} <br>`);
-  if (req.body.check) res.write(`Newsletter: Yes, sign me up.`);
-  else res.write(`Newsletter: No, thank you.`);
+
+  if (req.body.check)
+    res.send(
+      `Name: ${req.body.Name} <br> Email: ${req.body.Email} <br> Comments: ${req.body.Comments} <br>Newsletter: Yes, sign me up.`
+    );
+  else
+    res.send(
+      `Name: ${req.body.Name} <br> Email: ${req.body.Email} <br> Comments: ${req.body.Comments} <br>Newsletter: No, thank you.`
+    );
   res.end();
 });
 
