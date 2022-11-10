@@ -27,7 +27,6 @@ let getRoutes = () => {
   routes.forEach(
     (elem) => (result += `<li><a href="/${elem}">${elem}</a></li>`)
   );
-
   return result;
 };
 
@@ -40,9 +39,40 @@ app.get('/', (req, res) => {
   res.end();
 });
 
-app.get('/welcome', (req, res) => {});
+app.get('/welcome', (req, res) => {
+  res.status(200);
+  res.set({ 'Content-Type': 'text/html' });
+  res.send('<h1>Welcome page</h1> <p>Hi, welcome to this page.</p>');
+});
 
-// Add your code here
+app.get('/redirect', (req, res) => {
+  res.status(302);
+  res.redirect('/redirected');
+});
+
+app.get('/redirected', (req, res) => {
+  res.status(302);
+  res.set({ 'Content-Type': 'text/html' });
+  res.send('<h1>Redirected page</h1> <p>/redirect was /redirected.</p>');
+});
+
+app.get('/cache', (req, res) => {
+  res.set('Cache-control', 'max-age=86400');
+  res.set({ 'Content-Type': 'text/plain' });
+  res.send('This resource was cached.');
+});
+
+app.get('/cookie', (req, res) => {
+  res.cookie('hello', 'world');
+  res.set({ 'Content-Type': 'text/plain' });
+  res.send('cookies... yummm');
+});
+
+app.get('/other', (req, res) => {
+  res.status(404);
+  res.set({ 'Content-Type': 'text/html' });
+  res.send('<h1>404 - Page not found</h1>');
+});
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
