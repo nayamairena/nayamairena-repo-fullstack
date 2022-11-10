@@ -31,9 +31,8 @@ app.get('/capitals', (req, res) => {
     .then((response) => {
       response.data.forEach((element) => {
         countries.push(`${element.name.common} - ${element.capital}`);
-        countries.sort();
       });
-
+      countries.sort();
       res.render('page', {
         heading: 'Countries and Capitals',
         results: countries,
@@ -59,7 +58,9 @@ app.get('/populous', (req, res) => {
       response.data.sort((a, b) => b.population - a.population);
       response.data.forEach((element) => {
         if (element.population >= 5000000)
-          populous.push(`${element.name.common} - ${element.population}`);
+          populous.push(
+            `${element.name.common} - ${element.population.toLocaleString()}`
+          );
       });
 
       res.render('page', {
@@ -79,12 +80,34 @@ app.get('/regions', (req, res) => {
   // reduce the output array in a resulting object that will feature the numbers of countries in each region
   // disregard empty data from the output array
 
-  let regions = ['Asia - 50', 'Europe - 53', 'Africa - 60'];
+  let regions = [];
+  let totalRegions = [];
 
-  res.render('page', {
-    heading: 'Regions of the World',
-    results: regions,
-  });
+  axios
+    .get(url)
+    .then((response) => {
+      response.data.forEach((element) => {
+        regions.push(element.region);
+      });
+      let uniqueRegions = [...new Set(regions)];
+      //let unique = regions.filter((item, i) => regions.indexOf(item) === i);
+      uniqueRegions.forEach((region) => {
+        let tempCounter = regions.filter(
+          (current) => current === region
+        ).length;
+        totalRegions.push(`${region} - ${tempCounter}`);
+      });
+      res.render('page', {
+        heading: 'Regions of the World',
+        results: totalRegions,
+      });
+    })
+    .catch((err) => {
+      res.render('error', {
+        heading: 'Regions of the World',
+        results: `Error with API: \n${err}`,
+      });
+    });
 });
 
 app.listen(port, () => {
